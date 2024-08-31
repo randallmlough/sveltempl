@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs, { statSync } from "fs";
+import path, { join } from "path";
 
 // Custom plugin to clean and copy files
 export default function cleanCopy(relativePath: string) {
@@ -16,8 +16,12 @@ export default function cleanCopy(relativePath: string) {
       fs.mkdirSync(targetDir, { recursive: true });
 
       // Copy files
-      const srcDir = path.resolve(__dirname, "./dist/assets");
+      const srcDir = path.resolve(__dirname, "./dist");
       fs.readdirSync(srcDir).forEach((file) => {
+        const filePath = join(srcDir, file);
+        if (statSync(filePath).isDirectory()) {
+          return;
+        }
         const srcFile = path.resolve(srcDir, file);
         const destFile = path.resolve(targetDir, file);
         fs.copyFileSync(srcFile, destFile);

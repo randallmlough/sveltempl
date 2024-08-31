@@ -5,7 +5,15 @@ templ Nested() {
 		<h1>Nested Svelte Components</h1>
 		@Nav()
 		<div class="max-w-3xl">
-			@Svelte("Nested", nil)
+			@Svelte("lib.Nested", nil)
+		</div>
+		<div class="max-w-3xl flex gap-5">
+			<div>
+				@Svelte("lib.Button", nil)
+			</div>
+			<div>
+				@Svelte("lib.dir.Button", nil)
+			</div>
 		</div>
 	}
 }
